@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0" /> -->
+    <link href="/flexboxgrid.min.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/styles.css" media="screen" rel="stylesheet" type="text/css" />
+    <title>Soundboard</title>
+</head>
+<body>
+    <div class="row">
+        <div class="tile col-xs-6 col-sm-4 col-md-3 col-lg-2" hidden>
+            Template
+        </div>
+    </div>
+    <div class="row around-xs controls">
+        <div class="tile col-xs-6 col-sm-4 col-md-3 col-lg-2" id="reset">
+            Reset
+        </div>
+        <label for="fileInput" class="tile col-xs-6 col-sm-4 col-md-3 col-lg-2" id="add">
+            Add
+        </label>
+    </div>
+    <input type="file" id="fileInput" accept="audio/*" hidden />
+    <script type="text/javascript" src="/app.js"></script>
+</body>
+</html>

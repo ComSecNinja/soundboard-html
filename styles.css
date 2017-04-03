@@ -1,0 +1,51 @@
+@font-face {
+    font-family: Roboto; src: url('/Roboto/Roboto-Regular.ttf');
+}
+
+body {
+    font-family: Roboto, sans-serif;
+}
+
+.controls {
+    position: absolute;
+    width: 100%;
+    bottom: 1em;
+}
+
+#reset {
+    background-color: #f43530;
+}
+
+#add {
+    background-color: #6e7f29;
+}
+
+.tile {
+    background-color: #f77e5e;
+    color: #111;
+    text-align: center;
+    height: 4em;
+    line-height: 2em;
+    text-overflow: ellipsis;
+    padding: 1em;
+    cursor: pointer;
+}
+
+.tile:nth-child(4n+1) {
+    background-color: #0098d8;
+    color: #0b3536;
+}
+
+.tile:nth-child(4n+2) {
+    background-color: #c7943e;
+    color: #0f0a01;
+}
+
+.tile:nth-child(4n+3){
+    background-color: #e0e5db;
+    color: #35342f;
+}
+
+.tile[data-playing] {
+    background-color: pink;
+}

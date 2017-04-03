@@ -12,9 +12,16 @@ var playing = {name: null, track: new Audio()};
 
 var fi = document.querySelector("#fileInput");
 fi.onchange = function(evt) {
-    var file = evt.srcElement.files[evt.srcElement.files.length-1];
-    var name = file.name.split(".")[0];
+    for (var i = 0; i < evt.srcElement.files.length; i++) {
+        var file = evt.srcElement.files[i];
+        var name = file.name.split(".")[0];
+        console.log("Processing " + name);
+        loadFile(name, file);
+    }
+    evt.srcElement.value = null;
+};
 
+function loadFile(name, file) {
     var tile = document.querySelector("[data-name=" + name + "]");
 
     var reader = new FileReader();
@@ -24,18 +31,14 @@ fi.onchange = function(evt) {
         if (names.indexOf(name) < 0) {
             names.push(name);
         }
-        localStorage.setItem("names", names.join("."));
+        localStorage.setItem("names", JSON.stringify(names));
+
+        if (!tile) {
+            addTile(name);
+        }
     };
     reader.readAsDataURL(file);
-
-    console.log(file);
-
-    if (!tile) {
-        addTile(name);
-    }
-
-    evt.srcElement.value = null;
-};
+}
 
 function addTile(name) {
     var tile = document.querySelector("div.tile").cloneNode(true);
@@ -46,16 +49,22 @@ function addTile(name) {
     tile.onclick = function(evt) {
         playing.track.pause();
         if (playing.name === name) {
-            console.info("Pausing");
-            playing.name = null;
             return;
         }
 
-        playing = {name: name, track: new Audio(localStorage.getItem(evt.srcElement.getAttribute("data-name")))};
+        var data = localStorage.getItem(evt.srcElement.getAttribute("data-name"));
+        if (!data) {
+            console.error("Error loading " + name);
+            return;
+        }
+
+        playing = {name: name, track: new Audio(data)};
         playing.track.onplay = function() {
             tile.setAttribute("data-playing", "");
         };
         playing.track.onpause = function() {
+            console.info("Paused " + name);
+            playing.name = null;
             tile.removeAttribute("data-playing");
         };
         playing.track.play();
@@ -75,5 +84,5 @@ function resetBoard() {
 }
 
 function getNames() {
-    return localStorage.getItem("names") ? localStorage.getItem("names").split(".") : [];
+    return (localStorage.getItem("names") ? JSON.parse(localStorage.getItem("names")) : []);
 }
